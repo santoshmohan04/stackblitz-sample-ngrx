@@ -6,17 +6,16 @@
       </div>
       <div class="col-md-6">
         <div class="card p-4 shadow-sm">
-          <form #myform="ngForm" (ngSubmit)="addArticle(myform)">
+          <form [formGroup]="addArticleForm" (ngSubmit)="addArticle(addArticleForm)">
             <div class="form-group">
               <label for="name">Article Id</label>
               <input
                 type="text"
                 class="form-control"
-                ngModel
                 name="id"
                 id="id"
+                formControlName="articleid"
                 aria-describedby="identity"
-                required
               />
             </div>
             <div class="form-group">
@@ -24,7 +23,7 @@
               <input
                 type="text"
                 class="form-control"
-                ngModel
+                formControlName="title"
                 name="title"
                 id="title"
                 aria-describedby="title"
@@ -35,7 +34,7 @@
               <input
                 type="text"
                 class="form-control"
-                ngModel
+                formControlName="author"
                 name="author"
                 id="author"
               />
@@ -45,12 +44,12 @@
               <input
                 type="text"
                 class="form-control"
-                ngModel
+                formControlName="publisher"
                 name="publisher"
                 id="publisher"
               />
             </div>
-            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+            <button type="submit" class="btn btn-primary mt-3" [disabled]="addArticleForm.invalid">Submit</button>
           </form>
         </div>
       </div>
@@ -61,6 +60,9 @@
             *ngFor="let article of articles$ | async"
           >
             {{ article.title }} <b>{{ article.author }}</b>
+            <span class="mx-2">
+              <i class="bi bi-trash text-danger mx-2" (click)="deleteArticle(article)"></i>
+            </span>
           </li>
         </ul>
       </div>
